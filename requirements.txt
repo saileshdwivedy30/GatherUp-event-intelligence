@@ -1,0 +1,7 @@
+requests
+pymongo
+fuzzywuzzy
+python-Levenshtein
+scikit-learn
+ transformers
+ dotenv

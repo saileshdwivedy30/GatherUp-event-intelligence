@@ -1,0 +1,16 @@
+# Ignore Python cache and compiled files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore environment files
+.env
+
+# Ignore IDE-specific files
+.idea/
+*.iml
+
+# Ignore inspection and workspace settings
+.idea/**
+ai_ml/

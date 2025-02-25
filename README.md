@@ -1,7 +1,3 @@
-Here's a **GitHub README** for your repository:  
-
----
-
 # **Event Scraper: AI-Driven Event Data Aggregation & Processing**  
 
 **Event Scraper** is a modular system that fetches, processes, and stores event data from multiple sources (e.g., Ticketmaster, Eventbrite, Meetup).

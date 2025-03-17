@@ -22,7 +22,7 @@ class TicketmasterFetcher(BaseFetcher):
             "apikey": TICKETMASTER_API_KEY,
             "size": 199,
             "page": 0,
-            "startDateTime": "2025-03-01T00:00:00Z",
+            "startDateTime": "2025-05-01T00:00:00Z",
             "city": "New York"
         }
 

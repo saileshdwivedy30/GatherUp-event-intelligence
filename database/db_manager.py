@@ -1,10 +1,24 @@
 import pymongo
+import os
+from dotenv import load_dotenv
 
 class DatabaseManager:
     """Handles MongoDB connections and event storage with multi-source merging."""
 
+    dotenv_path = os.path.join(os.path.dirname(__file__), '/Users/saileshdwivedy/PycharmProjects/GatherUp/.env')  # Adjust path if needed
+    load_dotenv(dotenv_path)
+
     def __init__(self, db_name="event_data", collection_name="events"):
-        self.client = pymongo.MongoClient("mongodb://localhost:27017/")
+        MONGO_URI = os.getenv("MONGO_URI")  # Fetch from .env file
+
+        print(f"🔍 DEBUG: Loaded MONGO_URI = {MONGO_URI}")
+
+        if not MONGO_URI or "localhost" in MONGO_URI:
+            print("❌ Warning: Connecting to LOCAL MongoDB!")
+        else:
+            print(f"✅ Connecting to MongoDB Atlas: {MONGO_URI}")
+
+        self.client = pymongo.MongoClient(MONGO_URI)
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]
 

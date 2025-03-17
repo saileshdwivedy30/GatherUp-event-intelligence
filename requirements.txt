@@ -1,7 +1,8 @@
 requests
-pymongo
+#pymongo
 fuzzywuzzy
 python-Levenshtein
 scikit-learn
- transformers
- dotenv
+transformers
+python-dotenv
+pymongo[srv]

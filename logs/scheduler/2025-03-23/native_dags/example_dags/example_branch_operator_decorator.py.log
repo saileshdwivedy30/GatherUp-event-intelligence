@@ -1,0 +1,15 @@
+[2025-03-22T19:31:02.638-0600] {processor.py:186} INFO - Started process (PID=34088) to work on /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:31:02.646-0600] {processor.py:914} INFO - Processing file /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py for tasks to queue
+[2025-03-22T19:31:02.662-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:31:02.660-0600] {dagbag.py:588} INFO - Filling up the DagBag from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:31:03.192-0600] {processor.py:927} WARNING - No viable dags retrieved from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:31:03.334-0600] {processor.py:208} INFO - Processing /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py took 0.744 seconds
+[2025-03-22T19:38:38.079-0600] {processor.py:186} INFO - Started process (PID=34257) to work on /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:38:38.084-0600] {processor.py:914} INFO - Processing file /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py for tasks to queue
+[2025-03-22T19:38:38.093-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:38:38.092-0600] {dagbag.py:588} INFO - Filling up the DagBag from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:38:38.542-0600] {processor.py:927} WARNING - No viable dags retrieved from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:38:38.638-0600] {processor.py:208} INFO - Processing /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py took 0.587 seconds
+[2025-03-22T19:40:37.922-0600] {processor.py:186} INFO - Started process (PID=34328) to work on /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:40:37.925-0600] {processor.py:914} INFO - Processing file /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py for tasks to queue
+[2025-03-22T19:40:37.932-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:40:37.931-0600] {dagbag.py:588} INFO - Filling up the DagBag from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:40:38.310-0600] {processor.py:927} WARNING - No viable dags retrieved from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py
+[2025-03-22T19:40:38.418-0600] {processor.py:208} INFO - Processing /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_branch_operator_decorator.py took 0.523 seconds

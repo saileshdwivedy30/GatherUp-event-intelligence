@@ -1,0 +1,33 @@
+[2025-03-22T19:37:54.725-0600] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-03-22T19:37:54.792-0600] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: eventbrite_scraper.scrape_eventbrite scheduled__2025-03-22T12:00:00+00:00 [queued]>
+[2025-03-22T19:37:54.838-0600] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: eventbrite_scraper.scrape_eventbrite scheduled__2025-03-22T12:00:00+00:00 [queued]>
+[2025-03-22T19:37:54.842-0600] {taskinstance.py:2867} INFO - Starting attempt 1 of 3
+[2025-03-22T19:37:54.966-0600] {taskinstance.py:2890} INFO - Executing <Task(PythonOperator): scrape_eventbrite> on 2025-03-22 12:00:00+00:00
+[2025-03-22T19:37:54.978-0600] {standard_task_runner.py:72} INFO - Started process 34223 to run task
+[2025-03-22T19:37:55.002-0600] {standard_task_runner.py:104} INFO - Running: ['airflow', 'tasks', 'run', 'eventbrite_scraper', 'scrape_eventbrite', 'scheduled__2025-03-22T12:00:00+00:00', '--job-id', '3', '--raw', '--subdir', 'DAGS_FOLDER/event_fetcher_dag.py', '--cfg-path', '/tmp/tmpdhdkj6gx']
+[2025-03-22T19:37:55.007-0600] {standard_task_runner.py:105} INFO - Job 3: Subtask scrape_eventbrite
+[2025-03-22T19:37:55.429-0600] {task_command.py:467} INFO - Running <TaskInstance: eventbrite_scraper.scrape_eventbrite scheduled__2025-03-22T12:00:00+00:00 [running]> on host Saadhvi-Laptop.
+[2025-03-22T19:37:55.889-0600] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_EMAIL='saadhvirayasam10@gmail.com' AIRFLOW_CTX_DAG_OWNER='airflow' AIRFLOW_CTX_DAG_ID='eventbrite_scraper' AIRFLOW_CTX_TASK_ID='scrape_eventbrite' AIRFLOW_CTX_EXECUTION_DATE='2025-03-22T12:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2025-03-22T12:00:00+00:00'
+[2025-03-22T19:37:55.901-0600] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-03-22T19:37:55.906-0600] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-03-22T19:37:55.911-0600] {logging_mixin.py:190} INFO - Current task name:scrape_eventbrite state:running start_date:2025-03-23 01:37:54.795996+00:00
+[2025-03-22T19:37:55.917-0600] {logging_mixin.py:190} INFO - Dag name:eventbrite_scraper and current dag run status:running
+[2025-03-22T19:37:55.923-0600] {taskinstance.py:732} INFO - ::endgroup::
+[2025-03-22T19:37:55.931-0600] {event_fetcher_dag.py:53} INFO - Starting Eventbrite scraping for co--boulder
+[2025-03-22T19:37:58.103-0600] {logging_mixin.py:190} WARNING - /home/saadh/.local/lib/python3.10/site-packages/pymongo/synchronous/mongo_client.py:2565 UserWarning: MongoClient opened before fork. May not be entirely fork-safe, proceed with caution. See PyMongo's documentation for details: https://dochub.mongodb.org/core/pymongo-fork-deadlock
+[2025-03-22T19:38:03.214-0600] {logging_mixin.py:190} INFO - 🔄 Detected 3 duplicate events merged into 1.
+[2025-03-22T19:38:03.221-0600] {logging_mixin.py:190} INFO - Here are two examples of merged duplicate events:
+[2025-03-22T19:38:03.231-0600] {logging_mixin.py:190} INFO - 📌 Original: Taste of Pearl 2025 → Merged With: Taste of Pearl 2025
+[2025-03-22T19:38:03.238-0600] {logging_mixin.py:190} INFO - 📌 Original: Latino Chamber - 2nd Annual Empowered Women Group Conference → Merged With: Latino Chamber - 2nd Annual Empowered Women Group Conference
+[2025-03-22T19:38:03.247-0600] {logging_mixin.py:190} INFO - Processed 54 events successfully!
+[2025-03-22T19:38:03.254-0600] {event_fetcher_dag.py:61} INFO - Successfully scraped Eventbrite events for co--boulder
+[2025-03-22T19:38:03.260-0600] {python.py:240} INFO - Done. Returned value was: Successfully scraped Eventbrite events for co--boulder
+[2025-03-22T19:38:03.405-0600] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-03-22T19:38:03.408-0600] {taskinstance.py:353} INFO - Marking task as SUCCESS. dag_id=eventbrite_scraper, task_id=scrape_eventbrite, run_id=scheduled__2025-03-22T12:00:00+00:00, execution_date=20250322T120000, start_date=20250323T013754, end_date=20250323T013803
+[2025-03-22T19:38:03.577-0600] {logging_mixin.py:190} INFO - Task instance in success state
+[2025-03-22T19:38:03.581-0600] {logging_mixin.py:190} INFO -  Previous state of the Task instance: running
+[2025-03-22T19:38:03.584-0600] {logging_mixin.py:190} INFO - Dag name:eventbrite_scraper queued_at:2025-03-23 01:37:45.567626+00:00
+[2025-03-22T19:38:03.586-0600] {logging_mixin.py:190} INFO - Task hostname:Saadhvi-Laptop. operator:PythonOperator
+[2025-03-22T19:38:03.615-0600] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2025-03-22T19:38:03.676-0600] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-03-22T19:38:03.680-0600] {local_task_job_runner.py:245} INFO - ::endgroup::

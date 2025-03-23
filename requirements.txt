@@ -5,3 +5,4 @@ python-Levenshtein
 scikit-learn
  transformers
  dotenv
+beautifulsoup4

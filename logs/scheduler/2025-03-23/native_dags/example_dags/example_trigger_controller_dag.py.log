@@ -1,0 +1,22 @@
+[2025-03-22T19:33:11.580-0600] {processor.py:186} INFO - Started process (PID=34126) to work on /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py
+[2025-03-22T19:33:11.587-0600] {processor.py:914} INFO - Processing file /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py for tasks to queue
+[2025-03-22T19:33:11.605-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:11.602-0600] {dagbag.py:588} INFO - Filling up the DagBag from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py
+[2025-03-22T19:33:11.631-0600] {processor.py:925} INFO - DAG(s) 'example_trigger_controller_dag' retrieved from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py
+[2025-03-22T19:33:11.927-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:11.925-0600] {override.py:1930} INFO - Created Permission View: can delete on DAG:example_trigger_controller_dag
+[2025-03-22T19:33:12.115-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:12.114-0600] {override.py:1930} INFO - Created Permission View: can read on DAG:example_trigger_controller_dag
+[2025-03-22T19:33:12.286-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:12.285-0600] {override.py:1930} INFO - Created Permission View: can edit on DAG:example_trigger_controller_dag
+[2025-03-22T19:33:12.554-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:12.552-0600] {override.py:1930} INFO - Created Permission View: can delete on DAG Run:example_trigger_controller_dag
+[2025-03-22T19:33:12.726-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:12.725-0600] {override.py:1930} INFO - Created Permission View: can create on DAG Run:example_trigger_controller_dag
+[2025-03-22T19:33:12.882-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:12.881-0600] {override.py:1930} INFO - Created Permission View: menu access on DAG Run:example_trigger_controller_dag
+[2025-03-22T19:33:12.960-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:12.959-0600] {override.py:1930} INFO - Created Permission View: can read on DAG Run:example_trigger_controller_dag
+[2025-03-22T19:33:12.962-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:12.961-0600] {dag.py:3239} INFO - Sync 1 DAGs
+[2025-03-22T19:33:13.002-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:13.002-0600] {dag.py:3262} INFO - Creating ORM DAG for example_trigger_controller_dag
+[2025-03-22T19:33:13.026-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:33:13.025-0600] {dag.py:4180} INFO - Setting next_dagrun for example_trigger_controller_dag to 2021-01-01 00:00:00+00:00, run_after=2021-01-01 00:00:00+00:00
+[2025-03-22T19:33:13.198-0600] {processor.py:208} INFO - Processing /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py took 1.664 seconds
+[2025-03-22T19:39:46.332-0600] {processor.py:186} INFO - Started process (PID=34290) to work on /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py
+[2025-03-22T19:39:46.337-0600] {processor.py:914} INFO - Processing file /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py for tasks to queue
+[2025-03-22T19:39:46.348-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:39:46.346-0600] {dagbag.py:588} INFO - Filling up the DagBag from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py
+[2025-03-22T19:39:46.381-0600] {processor.py:925} INFO - DAG(s) 'example_trigger_controller_dag' retrieved from /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py
+[2025-03-22T19:39:46.488-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:39:46.486-0600] {dag.py:3239} INFO - Sync 1 DAGs
+[2025-03-22T19:39:46.566-0600] {logging_mixin.py:190} INFO - [2025-03-22T19:39:46.565-0600] {dag.py:4180} INFO - Setting next_dagrun for example_trigger_controller_dag to 2021-01-01 00:00:00+00:00, run_after=2021-01-01 00:00:00+00:00
+[2025-03-22T19:39:46.717-0600] {processor.py:208} INFO - Processing /home/saadh/.local/lib/python3.10/site-packages/airflow/example_dags/example_trigger_controller_dag.py took 0.412 seconds

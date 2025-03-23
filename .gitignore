@@ -14,3 +14,9 @@ __pycache__/
 # Ignore inspection and workspace settings
 .idea/**
 ai_ml/
+
+.vs/
+airflow.cfg
+airflow.db
+webserver_config.py
+logs/

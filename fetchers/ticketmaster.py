@@ -15,15 +15,15 @@ TICKETMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
 class TicketmasterFetcher(BaseFetcher):
     """Fetch events from Ticketmaster API."""
 
-    def __init__(self):
+    def __init__(self, city="New York", start_date="2025-04-07T00:00:00Z"):
         super().__init__("Ticketmaster")
         self.url = "https://app.ticketmaster.com/discovery/v2/events.json"
         self.params = {
             "apikey": TICKETMASTER_API_KEY,
             "size": 199,
             "page": 0,
-            "startDateTime": "2025-05-01T00:00:00Z",
-            "city": "New York"
+            "startDateTime": start_date,
+            "city": city
         }
 
     def fetch_events(self, max_events):
@@ -56,14 +56,19 @@ class TicketmasterFetcher(BaseFetcher):
                                                                                                   0] else None,
                             "country": event["_embedded"]["venues"][0]["country"]["countryCode"]
                         },
-                        "category": event["classifications"][0]["segment"][
-                            "name"] if "classifications" in event else "Unknown",
+                        # "category": event["classifications"][0]["segment"][
+                        #     "name"] if "classifications" in event else "Unknown",
+                        "classifications": {
+                            "segment": event.get("classifications", [{}])[0].get("segment", {}).get("name", "Unknown"),
+                            "genre": event.get("classifications", [{}])[0].get("genre", {}).get("name", "Unknown"),
+                            "subGenre": event.get("classifications", [{}])[0].get("subGenre", {}).get("name", "Unknown")
+                        },
                         "price_range": event.get("priceRanges", [{"min": None, "max": None, "currency": None}])[0],
                         "image_url": event["images"][0]["url"] if "images" in event else None,
                         "description": event.get("info", "No description available"),
                         "sources": {
                             "ticketmaster": {
-                                "url": event["url"],
+                                "url": event.get("url", "No URL available"),
                                 "ticket_availability": event["dates"]["status"]["code"]
                             }
                         },

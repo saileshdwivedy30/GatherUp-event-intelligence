@@ -3,7 +3,7 @@ import pymongo
 class DatabaseManager:
     """Handles MongoDB connections and event storage with multi-source merging."""
 
-    def __init__(self, db_name="event_data", collection_name="events"):
+    def __init__(self, db_name="event_data", collection_name="airflowtest"):
         self.client = pymongo.MongoClient("mongodb+srv://data-scraper:hvKrF79rEdjdK9g@gatherup-cluster.ggfu6.mongodb.net/event_data?retryWrites=true&w=majority&appName=gatherup-cluster")
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]

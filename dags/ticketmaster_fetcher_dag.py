@@ -19,10 +19,10 @@ logger.info(f"Parent directory: {parent_dir}")
 logger.info(f"Python path: {sys.path}")
 
 try:
-    from fetchers.eventbrite import EventbriteFetcher
-    logger.info("Successfully imported EventbriteFetcher")
+    from fetchers.ticketmaster import TicketmasterFetcher
+    logger.info("Successfully imported TicketmasterFetcher")
 except Exception as e:
-    logger.error(f"Failed to import EventbriteFetcher: {str(e)}")
+    logger.error(f"Failed to import TicketmasterFetcher: {str(e)}")
     raise
 
 # Define default arguments
@@ -39,39 +39,36 @@ default_args = {
 
 # Define the DAG
 dag = DAG(
-    'eventbrite_scraper',
+    'ticketmaster_scraper',
     default_args=default_args,
-    description='Scrapes events from Eventbrite',
+    description='Scrapes events from Ticketmaster',
     schedule_interval='0 */24 * * *',  # Runs every 24 hours
     catchup=False  # Don't run for past dates
 )
 
-def scrape_eventbrite(max_events=100, city="co--boulder"):
-    """
-    Scrape events from Eventbrite using the EventbriteFetcher
-    """
-    logger.info(f"Starting Eventbrite scraping for {city}")
+def scrape_ticketmaster(max_events=100):
+   
+    logger.info(f"Starting Ticketmaster scraping")
     try:
         # Initialize the fetcher
-        eventbrite_fetcher = EventbriteFetcher(city=city)
+        ticketmaster_fetcher = TicketmasterFetcher()
         
         # Fetch and process events
-        eventbrite_fetcher.fetch_events(max_events)
+        ticketmaster_fetcher.fetch_events(max_events)
         
-        logger.info(f"Successfully scraped Eventbrite events for {city}")
-        return f"Successfully scraped Eventbrite events for {city}"
+        logger.info(f"Successfully scraped Ticketmaster events")
+        return f"Successfully scraped Ticketmaster events"
         
     except Exception as e:
-        logger.error(f"Error scraping Eventbrite events: {str(e)}")
+        logger.error(f"Error scraping Ticketmaster events: {str(e)}")
         raise
 
 # Create task instance
-scrape_eventbrite_task = PythonOperator(
-    task_id='scrape_eventbrite',
-    python_callable=scrape_eventbrite,
+scrape_ticketmaster_task = PythonOperator(
+    task_id='scrape_ticketmaster',
+    python_callable=scrape_ticketmaster,
     op_kwargs={
-        'max_events': 100,
-        'city': 'co--boulder'
+        'max_events': 100
     },
     dag=dag,
 )

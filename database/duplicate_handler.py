@@ -31,7 +31,18 @@ class DuplicateHandler:
             if self.is_duplicate(existing_event, event_data):
                 self.duplicate_count += 1
                 if len(self.merged_examples) < 2:
-                    self.merged_examples.append((existing_event["name"], event_data["name"]))
+                    self.merged_examples.append({
+                        "original": {
+                            "name": existing_event["name"],
+                            "date_time": existing_event["date_time"],
+                            "venue": existing_event["venue"]["name"]
+                        },
+                        "duplicate": {
+                            "name": event_data["name"],
+                            "date_time": event_data["date_time"],
+                            "venue": event_data["venue"]["name"]
+                        }
+                    })
 
                 # Pass both events to `db_manager` for merging
                 db_manager.insert_event(event_data)
@@ -44,8 +55,14 @@ class DuplicateHandler:
         print(f"🔄 Detected {self.duplicate_count} duplicate events merged into {self.duplicate_count // 2}.")
         if self.merged_examples:
             print("Here are two examples of merged duplicate events:")
-            for original, merged in self.merged_examples:
-                print(f"📌 Original: {original} → Merged With: {merged}")
+            for pair in self.merged_examples:
+                print("📌 Original Event:")
+                print(f"   🏷️  {pair['original']['name']}")
+                print(f"   📅  {pair['original']['date_time']} | 📍 {pair['original']['venue']}")
+                print("🔁 Merged With:")
+                print(f"   🏷️  {pair['duplicate']['name']}")
+                print(f"   📅  {pair['duplicate']['date_time']} | 📍 {pair['duplicate']['venue']}")
+                print("—" * 40)
 
 
 duplicate_handler = DuplicateHandler()

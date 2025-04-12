@@ -6,8 +6,8 @@ import pprint
 load_dotenv()
 
 client = MongoClient(os.getenv("MONGO_URI"))
-db = client["event_scraper"]
-collection = db["eventbrite_events"]
+db = client["event_data"]
+collection = db["events"]
 
 print("📦 Showing 20 sample events:\n")
 for event in collection.find().limit(20):

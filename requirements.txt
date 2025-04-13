@@ -1,0 +1,13 @@
+requests
+#pymongo
+fuzzywuzzy
+python-Levenshtein
+scikit-learn
+transformers
+python-dotenv
+pymongo[srv]
+pandas
+matplotlib
+ transformers
+ dotenv
+beautifulsoup4

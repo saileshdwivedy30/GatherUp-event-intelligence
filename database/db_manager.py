@@ -1,10 +1,27 @@
 import pymongo
+import os
+from dotenv import load_dotenv
+import sys
+
+# Database imports
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(parent_dir)
 
 class DatabaseManager:
     """Handles MongoDB connections and event storage with multi-source merging."""
+    load_dotenv()
 
     def __init__(self, db_name="event_data", collection_name="airflowtest"):
-        self.client = pymongo.MongoClient("mongodb+srv://data-scraper:hvKrF79rEdjdK9g@gatherup-cluster.ggfu6.mongodb.net/event_data?retryWrites=true&w=majority&appName=gatherup-cluster")
+        MONGO_URI = os.getenv("MONGO_URI")  # Fetch from .env file
+
+        print(f"DEBUG: Loaded MONGO_URI = {MONGO_URI}")
+
+        if not MONGO_URI or "localhost" in MONGO_URI:
+            print("Warning: Connecting to LOCAL MongoDB!")
+        else:
+            print(f"Connecting to MongoDB Atlas: {MONGO_URI}")
+
+        self.client = pymongo.MongoClient(MONGO_URI)
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]
 
@@ -49,7 +66,7 @@ class DatabaseManager:
             if ticket["type"] not in existing_ticket_types:
                 existing_event["ticket_types"].append(ticket)
 
-        # ✅ Fix: Handle `NoneType` for `price_range`
+        # Fix: Handle `NoneType` for `price_range`
         existing_event.setdefault("price_range", {"min": None, "max": None, "currency": "USD"})
         new_event.setdefault("price_range", {"min": None, "max": None, "currency": "USD"})
 

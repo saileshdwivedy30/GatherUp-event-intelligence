@@ -46,33 +46,35 @@ dag = DAG(
     catchup=False  # Don't run for past dates
 )
 
-def scrape_eventbrite(max_events=100, city="co--boulder"):
-    """
-    Scrape events from Eventbrite using the EventbriteFetcher
-    """
-    logger.info(f"Starting Eventbrite scraping for {city}")
-    try:
-        # Initialize the fetcher
-        eventbrite_fetcher = EventbriteFetcher(city=city)
-        
-        # Fetch and process events
-        eventbrite_fetcher.fetch_events(max_events)
-        
-        logger.info(f"Successfully scraped Eventbrite events for {city}")
-        return f"Successfully scraped Eventbrite events for {city}"
-        
-    except Exception as e:
-        logger.error(f"Error scraping Eventbrite events: {str(e)}")
-        raise
+cities = {
+    "New York": "ny--new-york",
+    "Los Angeles": "ca--los-angeles",
+    "Chicago": "il--chicago",
+    "Austin": "tx--austin",
+    "San Francisco": "ca--san-francisco",
+    "Seattle": "wa--seattle",
+    "Miami": "fl--miami",
+    "Denver": "co--denver",
+    "Boston": "ma--boston",
+    "Atlanta": "ga--atlanta"
+}
 
-# Create task instance
+def scrape_eventbrite_multiple_cities(max_events=50):
+    logger.info("Starting Eventbrite scraping for multiple cities")
+    for city_name, slug in cities.items():
+        try:
+            logger.info(f"Fetching Eventbrite events for {city_name} ({slug})")
+            eventbrite_fetcher = EventbriteFetcher(city=slug)
+            eventbrite_fetcher.fetch_events(max_events)
+            logger.info(f"Successfully fetched for {city_name}")
+        except Exception as e:
+            logger.error(f"Failed for {city_name}: {str(e)}")
+    return "Eventbrite scraping completed for all cities."
+
 scrape_eventbrite_task = PythonOperator(
-    task_id='scrape_eventbrite',
-    python_callable=scrape_eventbrite,
-    op_kwargs={
-        'max_events': 100,
-        'city': 'co--boulder'
-    },
+    task_id='scrape_eventbrite_multiple_cities',
+    python_callable=scrape_eventbrite_multiple_cities,
+    op_kwargs={'max_events': 50},
     dag=dag,
 )
 

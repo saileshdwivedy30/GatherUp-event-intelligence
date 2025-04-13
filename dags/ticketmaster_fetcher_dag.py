@@ -46,30 +46,40 @@ dag = DAG(
     catchup=False  # Don't run for past dates
 )
 
-def scrape_ticketmaster(max_events=100):
-   
-    logger.info(f"Starting Ticketmaster scraping")
-    try:
-        # Initialize the fetcher
-        ticketmaster_fetcher = TicketmasterFetcher()
-        
-        # Fetch and process events
-        ticketmaster_fetcher.fetch_events(max_events)
-        
-        logger.info(f"Successfully scraped Ticketmaster events")
-        return f"Successfully scraped Ticketmaster events"
-        
-    except Exception as e:
-        logger.error(f"Error scraping Ticketmaster events: {str(e)}")
-        raise
+cities = [
+    "New York", "Los Angeles", "Chicago", "Austin", "San Francisco",
+    "Seattle", "Miami", "Denver", "Boston", "Atlanta"
+]
 
-# Create task instance
+def scrape_ticketmaster_multiple_cities(max_events=50, total_days=10):
+    logger.info("Starting Ticketmaster scraping for multiple cities and days")
+    base_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
+    
+    for city in cities:
+        logger.info(f"City: {city}")
+        for i in range(total_days):
+            current_date = base_date + timedelta(days=i)
+            start_date_str = current_date.strftime("%Y-%m-%dT00:00:00Z")
+            end_date_str = current_date.strftime("%Y-%m-%dT23:59:59Z")
+
+            logger.info(f"Date: {start_date_str} to {end_date_str}")
+            try:
+                fetcher = TicketmasterFetcher(
+                    city=city,
+                    start_date=start_date_str,
+                    end_date=end_date_str
+                )
+                fetcher.fetch_events(max_events)
+                logger.info(f"Success: {city} on {start_date_str}")
+            except Exception as e:
+                logger.error(f"Failed: {city} on {start_date_str}: {str(e)}")
+
+    return "Ticketmaster scraping completed for all cities and days."
+
 scrape_ticketmaster_task = PythonOperator(
-    task_id='scrape_ticketmaster',
-    python_callable=scrape_ticketmaster,
-    op_kwargs={
-        'max_events': 100
-    },
+    task_id='scrape_ticketmaster_multiple_cities',
+    python_callable=scrape_ticketmaster_multiple_cities,
+    op_kwargs={'max_events': 50, 'total_days': 10},
     dag=dag,
 )
 

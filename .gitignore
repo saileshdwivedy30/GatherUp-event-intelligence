@@ -3,6 +3,7 @@ __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.DS_Store
 
 # Ignore environment files
 .env
@@ -13,6 +14,8 @@ __pycache__/
 
 # Ignore inspection and workspace settings
 .idea/**
+ai_ml/new_models/
+ai_ml/old_code/
 ai_ml/
 
 .vs/

@@ -2,11 +2,16 @@
 from recommender import MLRecommender
 
 # Simulate a user who likes these categories
-user_categories = ["Music", "Sports"]  # <- change as needed
+user_categories = ["Music"]
+user_cities = ["Los Angeles", "San Francisco"]
 
 # Initialize and get recommendations
 recommender = MLRecommender()
-results = recommender.recommend(preferred_categories=user_categories, top_n=30, return_ids_only=False)
+results = recommender.recommend(
+    preferred_categories=user_categories,
+    preferred_locations=user_cities,
+    top_n=20
+)
 
 # Print results
 print("📌 Recommended Events:\n")

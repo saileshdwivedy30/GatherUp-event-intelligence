@@ -43,48 +43,16 @@ class DatabaseManager:
         return self.collection.count_documents({})
 
     def merge_event_data(self, existing_event, new_event):
-        """Merge details from a duplicate event into the existing event."""
+        """Merge only source URLs from the new event into the existing event."""
 
-        # Merge platform_ids
-        existing_event.setdefault("platform_ids", {})
-        new_event.setdefault("platform_ids", {})
-        existing_event["platform_ids"].update(new_event["platform_ids"])
+        # Ensure both have sources dicts
+        existing_event.setdefault("sources", {})
+        new_event.setdefault("sources", {})
 
-        # Merge tags (combine unique tags)
-        existing_event.setdefault("tags", [])
-        new_event.setdefault("tags", [])
-        existing_event["tags"] = list(set(existing_event["tags"]) | set(new_event["tags"]))
-
-        # Merge ticket types (only add new ones)
-        existing_event.setdefault("ticket_types", [])
-        new_event.setdefault("ticket_types", [])
-        existing_ticket_types = {t["type"]: t for t in existing_event["ticket_types"]}
-        for ticket in new_event["ticket_types"]:
-            if ticket["type"] not in existing_ticket_types:
-                existing_event["ticket_types"].append(ticket)
-
-        # ✅ Fix: Handle `NoneType` for `price_range`
-        existing_event.setdefault("price_range", {"min": None, "max": None, "currency": "USD"})
-        new_event.setdefault("price_range", {"min": None, "max": None, "currency": "USD"})
-
-        existing_min = existing_event["price_range"]["min"]
-        new_min = new_event["price_range"]["min"]
-        existing_max = existing_event["price_range"]["max"]
-        new_max = new_event["price_range"]["max"]
-
-        # Ensure values are not None before comparing
-        if existing_min is None:
-            existing_event["price_range"]["min"] = new_min
-        elif new_min is not None:
-            existing_event["price_range"]["min"] = min(existing_min, new_min)
-
-        if existing_max is None:
-            existing_event["price_range"]["max"] = new_max
-        elif new_max is not None:
-            existing_event["price_range"]["max"] = max(existing_max, new_max)
-
-        existing_event["price_range"]["currency"] = new_event["price_range"].get("currency", "USD")
+        # Merge sources (e.g., add 'eventbrite' if it’s not already there)
+        existing_event["sources"].update(new_event["sources"])
 
         return existing_event
+
 
 db_manager = DatabaseManager()

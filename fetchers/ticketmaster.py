@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from fetchers.base_fetcher import BaseFetcher
 from database.db_manager import db_manager
 from database.duplicate_handler import duplicate_handler
+from dateutil.parser import parse
 
 # Load API keys from .env file
 load_dotenv()
@@ -55,6 +56,8 @@ class TicketmasterFetcher(BaseFetcher):
                     event_data = {
                         "name": event["name"],
                         "date_time": event["dates"]["start"].get("dateTime", event["dates"]["start"]["localDate"]),
+                        "dto_date_time": parse(event["dates"]["start"].get("dateTime", event["dates"]["start"]["localDate"])),
+
                         "venue": {
                             "name": event["_embedded"]["venues"][0]["name"],
                             "city": event["_embedded"]["venues"][0]["city"]["name"],

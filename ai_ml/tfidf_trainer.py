@@ -39,10 +39,10 @@ def train_tfidf_model():
     df["text"] = df["name"].fillna("") + " " + df["description"].fillna("")
 
     vectorizer = TfidfVectorizer(stop_words='english', max_features=5000)
-    tfidf_matrix = vectorizer.fit_transform(df["text"])
+    #tfidf_matrix = vectorizer.fit_transform(df["text"])
 
     joblib.dump(vectorizer, os.path.join(OUTPUT_DIR, "tfidf_vectorizer.pkl"))
-    joblib.dump(tfidf_matrix, os.path.join(OUTPUT_DIR, "tfidf_matrix.pkl"))
+    #joblib.dump(tfidf_matrix, os.path.join(OUTPUT_DIR, "tfidf_matrix.pkl"))
     df.to_pickle(os.path.join(OUTPUT_DIR, "event_df.pkl"))
 
     print("✅ TF-IDF model and matrix saved.")

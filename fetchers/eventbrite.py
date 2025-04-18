@@ -1,5 +1,4 @@
 import json
-from sre_parse import State
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime

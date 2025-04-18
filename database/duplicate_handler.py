@@ -145,6 +145,7 @@ class DuplicateHandler:
         })
 
     def log_duplicate_summary(self):
+
         print(f"Detected {self.duplicate_count} duplicate events merged.")
         print(f"   • Via ID match       : {self.duplicate_via_id}")
         print(f"   • Via Embeddings     : {self.duplicate_via_embedding}")

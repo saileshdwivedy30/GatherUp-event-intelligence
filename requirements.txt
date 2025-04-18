@@ -8,3 +8,6 @@ python-dotenv
 pymongo[srv]
 pandas
 matplotlib
+ transformers
+ dotenv
+beautifulsoup4

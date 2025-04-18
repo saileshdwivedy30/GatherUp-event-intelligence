@@ -1,22 +1,29 @@
 import pymongo
 import os
 from dotenv import load_dotenv
+import sys
+
+# Database imports
+parent_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(parent_dir)
 
 class DatabaseManager:
     """Handles MongoDB connections and event storage with multi-source merging."""
-
-    dotenv_path = os.path.join(os.path.dirname(__file__), '/Users/saileshdwivedy/PycharmProjects/GatherUp/.env')  # Adjust path if needed
-    load_dotenv(dotenv_path)
+    load_dotenv()
 
     def __init__(self, db_name="event_data", collection_name="events"):
         MONGO_URI = os.getenv("MONGO_URI")  # Fetch from .env file
 
+
         #print(f"DEBUG: Loaded MONGO_URI = {MONGO_URI}")
+
 
         if not MONGO_URI or "localhost" in MONGO_URI:
             print("Warning: Connecting to LOCAL MongoDB!")
         else:
+
             print(f"Connecting to MongoDB Atlas!")
+
 
         self.client = pymongo.MongoClient(MONGO_URI)
         self.db = self.client[db_name]
@@ -43,6 +50,7 @@ class DatabaseManager:
         return self.collection.count_documents({})
 
     def merge_event_data(self, existing_event, new_event):
+
         """Merge only source URLs from the new event into the existing event."""
 
         # Ensure both have sources dicts
@@ -51,6 +59,7 @@ class DatabaseManager:
 
         # Merge sources (e.g., add 'eventbrite' if it’s not already there)
         existing_event["sources"].update(new_event["sources"])
+
 
         return existing_event
 

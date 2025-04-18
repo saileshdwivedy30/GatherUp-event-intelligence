@@ -16,3 +16,11 @@ __pycache__/
 .idea/**
 ai_ml/new_models/
 ai_ml/old_code/
+ai_ml/
+
+.vs/
+airflow.cfg
+airflow.db
+webserver_config.py
+logs/
+airflow-webserver.pid

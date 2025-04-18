@@ -1,109 +1,3 @@
-# import hashlib
-# import json
-# import re
-# import torch
-# from sentence_transformers import SentenceTransformer, util
-# from database.db_manager import db_manager
-#
-#
-# class DuplicateHandler:
-#     """Handles intelligent duplicate detection using embeddings and logs method used."""
-#
-#     def __init__(self):
-#         self.duplicate_count = 0
-#         self.duplicate_via_id = 0
-#         self.duplicate_via_embedding = 0
-#         self.merged_examples = []
-#         self.model = SentenceTransformer("all-MiniLM-L6-v2")
-#
-#     def get_event_text(self, event):
-#         return f"{event['name']} at {event['venue']['name']}"
-#
-#     def embed_event(self, event):
-#         return self.model.encode(self.get_event_text(event), convert_to_tensor=True).to("cpu")
-#
-#     def generate_event_id(self, event):
-#         """Generate a stable _id using name + venue + date_time."""
-#         name = event["name"].strip().lower()
-#         venue = event["venue"]["name"].strip().lower()
-#         date = event["date_time"]
-#         raw = f"{name}|{venue}|{date}"
-#         return hashlib.md5(raw.encode()).hexdigest()
-#
-#     def is_duplicate_embedding(self, new_embedding, existing_event, threshold=0.92):
-#         if existing_event["date_time"] != self.current_event["date_time"]:
-#             return False
-#
-#         existing_embedding = torch.tensor(existing_event["_embedding"]).to("cpu")
-#         score = util.pytorch_cos_sim(new_embedding, existing_embedding).item()
-#
-#         if score >= threshold:
-#             self.duplicate_via_embedding += 1
-#             return True
-#         return False
-#
-#     def handle_duplicate(self, event_data):
-#         """Check if an event is a duplicate using ID first, then semantic similarity."""
-#         event_data["_id"] = self.generate_event_id(event_data)
-#
-#         # Step 1: Check for ID match
-#         existing_event = db_manager.find_event(event_data["_id"])
-#         if existing_event:
-#             self.duplicate_count += 1
-#             self.duplicate_via_id += 1
-#             if len(self.merged_examples) < 2:
-#                 self.merged_examples.append((existing_event, event_data))
-#             db_manager.insert_event(event_data)
-#             return False
-#
-#         # Step 2: No ID match, proceed with embedding
-#         self.current_event = event_data
-#         embedding = self.embed_event(event_data)
-#         candidates = db_manager.collection.find({"date_time": event_data["date_time"]})
-#
-#         for existing_event in candidates:
-#             if "_embedding" not in existing_event:
-#                 old_emb = self.embed_event(existing_event).tolist()
-#                 db_manager.collection.update_one(
-#                     {"_id": existing_event["_id"]},
-#                     {"$set": {"_embedding": old_emb}}
-#                 )
-#                 existing_event["_embedding"] = old_emb
-#
-#             if self.is_duplicate_embedding(embedding, existing_event):
-#                 self.duplicate_count += 1
-#                 if len(self.merged_examples) < 2:
-#                     self.merged_examples.append((existing_event, event_data))
-#                 db_manager.insert_event(event_data)
-#                 return False
-#
-#         # Step 3: Store as new event
-#         event_data["_embedding"] = embedding.tolist()
-#         db_manager.insert_event(event_data)
-#         return True
-#
-#     def log_duplicate_summary(self):
-#         print(f"🔄 Detected {self.duplicate_count} duplicate events merged.")
-#         print(f"   • ✅ Via ID match       : {self.duplicate_via_id}")
-#         print(f"   • 🤖 Via Embeddings     : {self.duplicate_via_embedding}")
-#
-#         if self.merged_examples:
-#             print("Here are two examples of merged duplicate events:")
-#             for original, duplicate in self.merged_examples:
-#                 print(f"📌 Original: {original['name']} | {original['date_time']} | {original['venue']['name']}")
-#                 print(f"🔁 Merged : {duplicate['name']} | {duplicate['date_time']} | {duplicate['venue']['name']}")
-#                 print("————————————————————————————————————————")
-#
-#             with open("new_dup_event_dump.json", "w") as f:
-#                 json.dump(
-#                     [{"original": o, "duplicate": d} for o, d in self.merged_examples],
-#                     f, indent=4
-#                 )
-#                 print("📄 Dump saved to: new_dup_event_dump.json")
-#
-#
-# duplicate_handler = DuplicateHandler()
-
 import hashlib
 import json
 import csv
@@ -125,9 +19,6 @@ def stringify_event(event):
     event.pop("_embedding", None)  # Remove embedding for cleaner output
     return event
 
-
-from dateutil.parser import isoparse
-
 def ensure_datetime(dt):
     if isinstance(dt, str):
         return isoparse(dt)
@@ -136,7 +27,8 @@ def ensure_datetime(dt):
 class DuplicateHandler:
     """Handles intelligent duplicate detection using embeddings and logs method used."""
 
-    def __init__(self):
+    def __init__(self, enable_logging):
+        self.enable_logging = enable_logging
         self.duplicate_count = 0
         self.duplicate_via_id = 0
         self.duplicate_via_embedding = 0
@@ -158,7 +50,7 @@ class DuplicateHandler:
         raw = f"{name}|{venue}|{date}"
         return hashlib.md5(raw.encode()).hexdigest()
 
-    def is_duplicate_embedding(self, new_embedding, existing_event, threshold=0.92):
+    def is_duplicate_embedding(self, new_embedding, existing_event, threshold=0.90):
 
         #stringify_date(existing_event)
 
@@ -178,7 +70,7 @@ class DuplicateHandler:
         """Check if an event is a duplicate using ID first, then semantic similarity."""
         event_data["_id"] = self.generate_event_id(event_data)
 
-        # Step 1: Check for ID match
+        # Check for ID match
         existing_event = db_manager.find_event(event_data["_id"])
         if existing_event:
             #stringify_date(existing_event)
@@ -190,7 +82,7 @@ class DuplicateHandler:
             db_manager.insert_event(event_data)
             return False
 
-        # Step 2: No ID match, proceed with embedding
+        # No ID match proceed with embedding
         self.current_event = event_data
         embedding = self.embed_event(event_data)
        #candidates = db_manager.collection.find({"date_time": event_data["date_time"]})
@@ -199,12 +91,7 @@ class DuplicateHandler:
         target_date_str = event_data["date_time"][:10]  # works for both "2025-04-17" and "2025-04-17T20:00:00Z"
 
         # Match any event that starts with that date (Eventbrite or Ticketmaster style)
-        candidates = db_manager.collection.find({
-            "date_time": {"$regex": f"^{target_date_str}"}
-        })
-
-
-
+        candidates = db_manager.collection.find({"date_time": {"$regex": f"^{target_date_str}"}})
 
         for existing_event in candidates:
 
@@ -225,7 +112,7 @@ class DuplicateHandler:
                 db_manager.insert_event(event_data)
                 return False
 
-        # Step 3: Store as new event
+        # Store as new event
         event_data["_embedding"] = embedding.tolist()
         db_manager.insert_event(event_data)
         return True
@@ -258,12 +145,12 @@ class DuplicateHandler:
         })
 
     def log_duplicate_summary(self):
-        print(f"🔄 Detected {self.duplicate_count} duplicate events merged.")
-        print(f"   • ✅ Via ID match       : {self.duplicate_via_id}")
-        print(f"   • 🤖 Via Embeddings     : {self.duplicate_via_embedding}")
+        print(f"Detected {self.duplicate_count} duplicate events merged.")
+        print(f"   • Via ID match       : {self.duplicate_via_id}")
+        print(f"   • Via Embeddings     : {self.duplicate_via_embedding}")
 
-        if self.merged_examples:
-            print(f"📦 Logging {len(self.merged_examples)} merged examples...")
+        if self.enable_logging and self.merged_examples:
+            print(f"Logging {len(self.merged_examples)} merged examples...")
 
             merged_log = []
             for original, duplicate in self.merged_examples:
@@ -282,9 +169,9 @@ class DuplicateHandler:
             with open("ticketmaster_eventbrite_merged.json", "w") as f:
                 json.dump(merged_log, f, indent=4)
 
-            print("📄 Full merged dump saved to: ticketmaster_eventbrite_merged.json")
+            print("Full merged dump saved to: ticketmaster_eventbrite_merged.json")
 
-        if self.duplicate_logs:
+        if self.enable_logging and self.duplicate_logs:
             with open("duplicate_events_log.csv", "w", newline="", encoding="utf-8") as f:
                 writer = csv.DictWriter(f, fieldnames=[
                     "match_type", "name", "venue", "date_time",
@@ -295,6 +182,6 @@ class DuplicateHandler:
                 ])
                 writer.writeheader()
                 writer.writerows(self.duplicate_logs)
-                print("📄 CSV log saved to: duplicate_events_log.csv")
+                print("CSV log saved to: duplicate_events_log.csv")
 
-duplicate_handler = DuplicateHandler()
+duplicate_handler = DuplicateHandler(enable_logging=False)

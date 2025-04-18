@@ -38,11 +38,11 @@ class TicketmasterFetcher(BaseFetcher):
         start_date = self.params["startDateTime"].split("T")[0]
 
         while total_fetched < max_events:
-            print(f"📦 Fetching page {self.params['page']}... (Total Fetched: {total_fetched}/{max_events})")
+            print(f"Fetching page {self.params['page']}... (Total Fetched: {total_fetched}/{max_events})")
 
             response = requests.get(self.url, params=self.params)
             if response.status_code != 200:
-                print(f"⚠️ API Error: {response.status_code} - {response.text}")
+                print(f"API Error: {response.status_code} - {response.text}")
                 break
 
             data = response.json()
@@ -90,13 +90,13 @@ class TicketmasterFetcher(BaseFetcher):
                 time.sleep(1.1)
 
             else:
-                print("✅ No more events available.")
+                print("No more events available.")
                 break
 
         # Log duplicates and stats
         duplicate_handler.log_duplicate_summary()
-        print(f"📊 Stats — {city} | {start_date} | Fetched: {total_api_events} | Stored: {total_fetched}")
+        print(f"Stats — {city} | {start_date} | Fetched: {total_api_events} | Stored: {total_fetched}")
 
         current_db_count = db_manager.count_events()
-        print(f"📁 Total events in DB so far: {current_db_count}")
+        print(f"Total events in DB so far: {current_db_count}")
 

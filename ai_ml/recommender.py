@@ -3,7 +3,6 @@ import pandas as pd
 from sklearn.metrics.pairwise import cosine_similarity
 from datetime import datetime, timezone
 import numpy as np
-from collections import defaultdict
 
 class MLRecommender:
     def __init__(self, model_path="new_models"):
@@ -30,15 +29,15 @@ class MLRecommender:
             lambda v: v.get("city", "").lower() if isinstance(v, dict) else ""
         )
 
-        # ✅ Strict location filtering
+        # Strict location filtering
         if preferred_locations:
             future_df = future_df[future_df["venue_city"].isin(preferred_locations)]
 
         if future_df.empty:
             return []
 
-        # 🎯 Loose category filtering:
-        # Build user profile ONLY from events in preferred categories (within the location-filtered pool)
+        # Loose category filtering:
+        # Build user profile only from events in preferred categories (within the location-filtered pool)
         filtered_df = future_df[future_df["category"].isin(preferred_categories)]
 
         if filtered_df.empty:
@@ -48,7 +47,7 @@ class MLRecommender:
         user_interest_matrix = self.vectorizer.transform(filtered_df["text"])
         user_profile_vector = np.asarray(user_interest_matrix.mean(axis=0)).reshape(1, -1)
 
-        # Compute similarity with ALL location-filtered events (any category)
+        # Compute similarity with "all" location-filtered events (any category)
         full_event_matrix = self.vectorizer.transform(future_df["text"])
         similarities = cosine_similarity(user_profile_vector, full_event_matrix).flatten()
 

@@ -11,12 +11,12 @@ class DatabaseManager:
     def __init__(self, db_name="event_data", collection_name="events"):
         MONGO_URI = os.getenv("MONGO_URI")  # Fetch from .env file
 
-        print(f"🔍 DEBUG: Loaded MONGO_URI = {MONGO_URI}")
+        #print(f"DEBUG: Loaded MONGO_URI = {MONGO_URI}")
 
         if not MONGO_URI or "localhost" in MONGO_URI:
-            print("❌ Warning: Connecting to LOCAL MongoDB!")
+            print("Warning: Connecting to LOCAL MongoDB!")
         else:
-            print(f"✅ Connecting to MongoDB Atlas: {MONGO_URI}")
+            print(f"Connecting to MongoDB Atlas!")
 
         self.client = pymongo.MongoClient(MONGO_URI)
         self.db = self.client[db_name]

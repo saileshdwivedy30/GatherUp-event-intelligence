@@ -11,7 +11,7 @@ class DatabaseManager:
     """Handles MongoDB connections and event storage with multi-source merging."""
     load_dotenv()
 
-    def __init__(self, db_name="event_data", collection_name="airflowtest"):
+    def __init__(self, db_name="event_data", collection_name="events"):
         MONGO_URI = os.getenv("MONGO_URI")  # Fetch from .env file
 
         print(f"DEBUG: Loaded MONGO_URI = {MONGO_URI}")

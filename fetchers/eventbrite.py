@@ -1,4 +1,5 @@
 import json
+from sre_parse import State
 import requests
 from bs4 import BeautifulSoup
 from datetime import datetime
@@ -12,6 +13,8 @@ sys.path.append(parent_dir)
 from database.db_manager import db_manager
 from database.duplicate_handler import duplicate_handler
 from fetchers.base_fetcher import BaseFetcher
+
+from dateutil.parser import parse
 
 class EventbriteFetcher(BaseFetcher):
     def __init__(self, city="co--boulder"):
@@ -45,6 +48,11 @@ class EventbriteFetcher(BaseFetcher):
     def process_event_data(self, event_items, max_events=None):
         """Processes event data, validates it, and inserts it into the database."""
         count = 0
+
+        #If location is Unknown:
+        state_name = self.city.split("--")[0].upper()
+        city_name = self.city.split("--")[1]
+
         for event_item in event_items:
             if max_events and count >= max_events:
                 break  # Stop processing if max_events limit is reached
@@ -58,11 +66,12 @@ class EventbriteFetcher(BaseFetcher):
             event_data = {
                 "name": event.get("name"),
                 "date_time": event.get("startDate"),
+                "dto_date_time": parse(event.get("startDate")),
                 "venue": {
                     "name": event.get("location", {}).get("name", "Unknown Venue"),
-                    "city": event.get("location", {}).get("address", {}).get("addressLocality", "Unknown City"),
-                    "state": event.get("location", {}).get("address", {}).get("addressRegion", "Unknown State"),
-                    "country": event.get("location", {}).get("address", {}).get("addressCountry", "Unknown Country")
+                    "city": event.get("location", {}).get("address", {}).get("addressLocality", city_name),
+                    "state": event.get("location", {}).get("address", {}).get("addressRegion", state_name),
+                    "country": event.get("location", {}).get("address", {}).get("addressCountry", "US")
                 },
                 "image_url": event.get("image", ""),
                 "description": event.get("description", ""),

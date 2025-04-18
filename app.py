@@ -62,6 +62,6 @@ if __name__ == "__main__":
             )
             fetcher.fetch_events(max_events_per_day)
             total_fetched += max_events_per_day
-
+        
 
     print(f"\nDone! Attempted to fetch up to {total_fetched} Ticketmaster events across {len(cities)} cities over {total_days} days.")

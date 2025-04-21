@@ -20,7 +20,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Compile project
-        run: find . -name "*.py" -exec python -m py_compile {} \;
+        run: find . -name "*.py" -exec sh -c 'echo "Checking {}" && python -m py_compile {}' \;
 
 
 

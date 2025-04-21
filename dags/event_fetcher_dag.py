@@ -42,7 +42,7 @@ dag = DAG(
     'eventbrite_scraper',
     default_args=default_args,
     description='Scrapes events from Eventbrite',
-    schedule_interval='0 */24 * * *',  # Runs every 24 hours
+    schedule_interval='0 0 * * *',  # Runs at midnight
     catchup=False  # Don't run for past dates
 )
 

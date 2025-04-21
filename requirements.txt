@@ -11,3 +11,5 @@ matplotlib
  transformers
  dotenv
 beautifulsoup4
+torch
+sentence_transformers

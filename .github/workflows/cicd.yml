@@ -1,8 +1,6 @@
 name: CI Workflow
 on:
   push:
-    paths:
-      - 'requirements.txt'  
     branches:
       - dev
 jobs:

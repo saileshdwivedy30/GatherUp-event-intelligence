@@ -34,6 +34,9 @@ jobs:
         with:
           credentials_json: ${{ secrets.GATHERUP_EVENT_INT_SECRET }}
 
+      - name: Who am I
+        run: gcloud auth list
+
       - name: Upload DAGs to Cloud Composer
         run: |
           gsutil -m cp -r dags fetchers database ai_ml app.py gs://$GCS_BUCKET/dags/

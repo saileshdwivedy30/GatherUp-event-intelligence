@@ -34,6 +34,11 @@ jobs:
         with:
           credentials_json: ${{ secrets.GATHERUP_EVENT_INT_SECRET }}
 
+      - name: Set up gcloud CLI
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: your-project-id 
+
       - name: Who am I
         run: gcloud auth list
 

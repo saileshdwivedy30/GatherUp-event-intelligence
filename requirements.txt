@@ -8,8 +8,7 @@ python-dotenv
 pymongo[srv]
 pandas
 matplotlib
- transformers
- dotenv
+dotenv
 beautifulsoup4
 torch
 sentence_transformers

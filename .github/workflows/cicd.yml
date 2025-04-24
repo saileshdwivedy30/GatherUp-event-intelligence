@@ -1,6 +1,8 @@
 name: CI Workflow
 on:
   push:
+    paths:
+      - 'requirements.txt'  
     branches:
       - dev
 jobs:
@@ -21,7 +23,30 @@ jobs:
 
       - name: Compile project
         run: find . -name "*.py" -exec sh -c 'echo "Checking {}" && python -m py_compile {}' \;
+      
+      - name: Install gcloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GATHERUP_EVENT_INT_SECRET }}
+          export_default_credentials: true
 
+      - name: Upload DAGs to Cloud Composer
+        run: |
+          gsutil -m cp -r dags fetchers database ai_ml app.py gs://$GCS_BUCKET/dags/
+        env:
+          GCS_BUCKET: ${{ secrets.COMPOSER_BUCKET }}
+
+      - name: Update Composer Dependencies
+        run: |
+          gcloud composer environments update $COMPOSER_ENV_NAME \
+            --location $COMPOSER_LOCATION \
+            --update-pypi-packages-from-file requirements.txt
+        env:
+          COMPOSER_ENV_NAME: ${{ secrets.COMPOSER_ENV_NAME }}
+          COMPOSER_LOCATION: ${{ secrets.COMPOSER_LOCATION }}
+
+       
 
 
 

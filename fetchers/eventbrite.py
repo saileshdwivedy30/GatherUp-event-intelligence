@@ -20,11 +20,12 @@ class EventbriteFetcher(BaseFetcher):
     def __init__(self, city="co--boulder"):
         self.city = city
         self.url = f"https://www.eventbrite.com/d/{self.city}/events/"
-        self.headers = {"User-Agent": "Mozilla/5.0"}
+        self.headers = {"Content-Type": "application/json"}
+        self.gatherup_api = 'https://gatherup-api-16273825216.us-central1.run.app/scrape_url'
 
     def fetch_html(self):
         """Fetches the Eventbrite events page for the specified city."""
-        response = requests.get(self.url, headers=self.headers)
+        response = requests.post(self.gatherup_api, json= {"url":self.url}, headers=self.headers)
         if response.status_code != 200:
             print(f"Failed to fetch data. Status code: {response.status_code}")
             return None
@@ -112,9 +113,9 @@ class EventbriteFetcher(BaseFetcher):
         duplicate_handler.log_duplicate_summary()
 
         print("\nEventbrite Summary:")
-        print(f"   • New events inserted     : {total_added}")
-        print(f"   • Duplicate events merged : {duplicate_handler.duplicate_count}")
-        print(f"   • Total events in db      : {db_manager.count_events()}")
+        print(f"New events inserted     : {total_added}")
+        print(f"Duplicate events merged : {duplicate_handler.duplicate_count}")
+        print(f"Total events in db      : {db_manager.count_events()}")
 
 
     def fetch_events(self, max_events=None):

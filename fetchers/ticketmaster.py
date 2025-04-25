@@ -9,9 +9,9 @@ from database.duplicate_handler import duplicate_handler
 from dateutil.parser import parse
 
 # Load API keys from .env file
-load_dotenv()
-TICKETMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
-
+#load_dotenv()
+#TICKETMASTER_API_KEY = os.getenv("TICKETMASTER_API_KEY")
+TICKETMASTER_API_KEY = 'tGkhSNOmAAvKRMHb6joV1YjGAzotyj5n'
 
 class TicketmasterFetcher(BaseFetcher):
     """Fetch events from Ticketmaster API."""

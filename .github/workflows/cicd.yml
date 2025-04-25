@@ -49,6 +49,7 @@ jobs:
           GCS_BUCKET: ${{ secrets.COMPOSER_BUCKET }}
 
       - name: Update Composer Dependencies
+        if : false
         run: |
           gcloud composer environments update $COMPOSER_ENV_NAME \
             --location $COMPOSER_LOCATION \

@@ -1,8 +1,6 @@
 import hashlib
 import json
 import csv
-import torch
-from sentence_transformers import SentenceTransformer, util
 from database.db_manager import db_manager
 from datetime import datetime
 from copy import deepcopy
@@ -34,13 +32,21 @@ class DuplicateHandler:
         self.duplicate_via_embedding = 0
         self.merged_examples = []
         self.duplicate_logs = []
-        self.model = SentenceTransformer("all-MiniLM-L6-v2")
+        self.model = None # Deferred initialization
 
+    def get_model(self):
+        if self.model is None:
+            from sentence_transformers import SentenceTransformer
+            self.model = SentenceTransformer("all-MiniLM-L6-v2")
+        return self.model
+    
     def get_event_text(self, event):
         return f"{event['name']} at {event['venue']['name']}"
 
     def embed_event(self, event):
-        return self.model.encode(self.get_event_text(event), convert_to_tensor=True).to("cpu")
+        model = self.get_model()
+        import torch
+        return model.encode(self.get_event_text(event), convert_to_tensor=True).to("cpu")
 
     def generate_event_id(self, event):
         """Generate a stable _id using name + venue + date_time."""
@@ -53,6 +59,8 @@ class DuplicateHandler:
     def is_duplicate_embedding(self, new_embedding, existing_event, threshold=0.90):
 
         #stringify_date(existing_event)
+        import torch
+        from sentence_transformers import util
 
         if existing_event["date_time"] != self.current_event["date_time"]:
             return False

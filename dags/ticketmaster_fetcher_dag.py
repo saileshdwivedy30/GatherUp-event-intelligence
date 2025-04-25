@@ -42,7 +42,7 @@ dag = DAG(
     'ticketmaster_scraper',
     default_args=default_args,
     description='Scrapes events from Ticketmaster',
-    schedule_interval='0 0 * * *',  # Runs at midnight
+    schedule_interval='0 */24 * * *',  # Runs every 24 hours
     catchup=False  # Don't run for past dates
 )
 

@@ -94,6 +94,14 @@ It utilizes **NLP & ML** techniques for **event categorization, personalized rec
 
 ---
 
+### 📂 `dags/` – **Airflow DAG Components**  
+| File | Description |
+|------|------------|
+| `event_fetcher_dag.py` | DAG for Scraping from Eventbrite to run at 12 AM UTC |
+| `ticketmaster_fetcher_dag.py` | DAG for Scraping from Eventbrite to run at 2 AM UTC |
+
+---
+
 ### `app.py` – **Main Script**  
 - This is the **entry point** to the application.  
 - Fetches events using the selected fetcher (e.g., `TicketmasterFetcher`).  

@@ -10,10 +10,6 @@ It utilizes **NLP & ML** techniques for **event categorization, personalized rec
 ✅ **Multi-Source Event Fetching** (APIs like Ticketmaster, Eventbrite)  
 ✅ **Duplicate Detection & Merging** (Fuzzy Matching, MD5 Hashing)  
 ✅ **MongoDB Storage** with Multi-Source Merging  
-
-In future: 
-
-✅ **NLP-Based Event Categorization** (TF-IDF, BERT-based classification)  
 ✅ **Personalized Recommendations** (Content-Based & Collaborative Filtering)  
 ✅ **Event Similarity Search** (TF-IDF & BERT Embeddings)  
 
@@ -33,11 +29,15 @@ In future:
 │   ├── db_manager.py         # MongoDB connection & operations
 │   ├── duplicate_handler.py  # Handles duplicate detection & merging
 │
-│── 📂 ml/               # AI & ML Components (Upcoming)
+│── 📂 ml/               # AI & ML Components
 │   ├── categorization.py   # NLP-based Event Categorization
 │   ├── recommender.py      # Event Recommendation System
 │   ├── similarity.py       # Event Similarity Search (TF-IDF & BERT)
 │
+|── 📂 dags/                         # Airflow DAGs
+│   ├── event_fetcher_dag.py            # DAG for Eventbrite to run at 12 AM UTC
+│   ├── ticketmaster_fetcher_dag.py     # DAG for Ticketmaster to run at 2 AM UTC
+|
 │── app.py                # Main script to run the application
 │── .env                  # API keys and config settings
 │── requirements.txt       # Dependencies

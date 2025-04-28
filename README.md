@@ -7,7 +7,7 @@ It utilizes **NLP & ML** techniques for **event categorization, personalized rec
 
 
 ## 📌 **Features**
-✅ **Multi-Source Event Fetching** (APIs like Ticketmaster, Eventbrite, Meetup)  
+✅ **Multi-Source Event Fetching** (APIs like Ticketmaster, Eventbrite)  
 ✅ **Duplicate Detection & Merging** (Fuzzy Matching, MD5 Hashing)  
 ✅ **MongoDB Storage** with Multi-Source Merging  
 
@@ -26,7 +26,7 @@ In future:
 │── 📂 fetchers/          # Event source fetchers
 │   ├── base_fetcher.py   # Base class for all fetchers
 │   ├── ticketmaster.py   # Ticketmaster API fetcher
-│   ├── eventbrite.py     # Eventbrite API fetcher (Future)
+│   ├── eventbrite.py     # Eventbrite API fetcher
 │   ├── meetup.py         # Meetup API fetcher (Future)
 │
 │── 📂 database/          # Database management
@@ -58,7 +58,7 @@ In future:
 3️⃣ **Storage in MongoDB**  
 - Events are stored in **MongoDB** with support for **multi-source merging** (e.g., same event from different platforms is combined).  
 
-4️⃣ **AI-Powered Processing (Upcoming)**  
+4️⃣ **AI-Powered Processing**  
 - **Event Categorization:** NLP model (TF-IDF, Naïve Bayes, BERT) to classify events.  
 - **Event Recommendation:** Suggests events based on user preferences (content-based & collaborative filtering).  
 - **Event Similarity Search:** Finds similar events using **TF-IDF & BERT embeddings**.  
@@ -72,7 +72,7 @@ In future:
 |------|------------|
 | `base_fetcher.py` | Defines the abstract class `BaseFetcher` for all event fetchers. Generates unique IDs based on name, date, and venue. |
 | `ticketmaster.py` | Implements `TicketmasterFetcher` to fetch events from the **Ticketmaster API** and process them before inserting into the database. |
-| `eventbrite.py` | (Upcoming) Fetches events from the **Eventbrite API**. |
+| `eventbrite.py` | Fetches events from the **Eventbrite** via web scraping (Beautiful Soup) |
 | `meetup.py` | (Upcoming) Fetches events from the **Meetup API**. |
 
 ---
@@ -85,7 +85,7 @@ In future:
 
 ---
 
-### 📂 `ml/` – **AI & Machine Learning Components (Upcoming)**  
+### 📂 `ml/` – **AI & Machine Learning Components**  
 | File | Description |
 |------|------------|
 | `categorization.py` | Classifies events using **TF-IDF, Naïve Bayes, or BERT** based on event name & description. |
@@ -101,17 +101,5 @@ In future:
 - Runs **event processing (categorization, recommendations, similarity search)**.  
 
 ---
-
-## 🛠 **To-Do List (Upcoming Features)**
-- [x] **Event Fetching (Ticketmaster)**
-- [x] **Duplicate Detection & Merging**
-- [ ] **Event Fetching bugs and changes (Ticketmaster)**
-- [ ] **Airflow automation (Ticketmaster)**
-- [ ] **Add Eventbrite & Meetup Fetchers**
-- [ ] **CI/CD**
-- [ ] **Cloud Deployment**
-- [ ] **Event Categorization (TF-IDF, BERT)**
-- [ ] **Event Recommendation System**
-- [ ] **Event Similarity Search**
 
 

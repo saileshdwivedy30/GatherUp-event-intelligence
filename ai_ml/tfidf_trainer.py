@@ -29,7 +29,7 @@ def train_tfidf_model():
     )
     print(df[["name", "description", "category", "date_time"]].head(5))
 
-    # proceed = input("\n⚠Proceed with training the TF-IDF model? (yes/no): ").strip().lower()
+    # proceed = input("\nProceed with training the TF-IDF model? (yes/no): ").strip().lower()
     # if proceed != "yes":
     #     print("Training cancelled.")
     #     return
